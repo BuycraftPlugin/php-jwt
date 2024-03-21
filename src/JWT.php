@@ -184,7 +184,7 @@ class JWT
     /**
      * Converts and signs a PHP array into a JWT string.
      *
-     * @param array<mixed>          $payload PHP array
+     * @param array<mixed>|null     $payload PHP array. null will result in passing an empty string to the payload segment
      * @param string|resource|OpenSSLAsymmetricKey|OpenSSLCertificate $key The secret key.
      * @param string                $alg     Supported algorithms are 'ES384','ES256', 'ES256K', 'HS256',
      *                                       'HS384', 'HS512', 'RS256', 'RS384', and 'RS512'
@@ -213,7 +213,7 @@ class JWT
         }
         $segments = [];
         $segments[] = static::urlsafeB64Encode((string) static::jsonEncode($header));
-        $segments[] = static::urlsafeB64Encode((string) static::jsonEncode($payload));
+        $segments[] = $payload === null ? '' : static::urlsafeB64Encode((string) static::jsonEncode($payload));
         $signing_input = \implode('.', $segments);
 
         $signature = static::sign($signing_input, $key, $alg);
