@@ -197,7 +197,7 @@ class JWT
      * @uses urlsafeB64Encode
      */
     public static function encode(
-        array $payload,
+        ?array $payload,
         $key,
         string $alg,
         string $keyId = null,
